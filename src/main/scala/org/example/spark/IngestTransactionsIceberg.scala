@@ -1,7 +1,6 @@
 package org.example.spark
 
 import org.apache.spark.sql.SparkSession
-import org.apache.spark.sql.functions._
 import org.apache.spark.sql.types._
 
 object IngestTransactionsIceberg {
@@ -21,7 +20,7 @@ object IngestTransactionsIceberg {
           StructField("city", StringType, false),
           StructField("zip", StringType, false),
           StructField("commerce", StringType, false),
-          StructField("amount", StringType, false),
+          StructField("amount", DecimalType(10, 2), false),
           StructField("status", StringType, false)
         )
       )

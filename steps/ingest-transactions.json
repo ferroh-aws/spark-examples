@@ -1,0 +1,24 @@
+[
+  {
+    "Type": "Spark",
+    "Name": "IngestToIceberg",
+    "ActionOnFailure": "CONTINUE",
+    "Args": [
+      "--master", "yarn",
+      "--deploy-mode", "cluster",
+      "--executor-memory", "2g",
+      "--num-executors", "6",
+      "--executor-cores", "1",
+      "--class", "org.example.spark.IngestTransactionsIceberg",
+      "--conf", "spark.sql.extensions=org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions",
+      "--conf", "spark.sql.catalog.glue=org.apache.iceberg.spark.SparkCatalog",
+      "--conf", "spark.sql.catalog.glue.warehouse=s3://data.aws-poc-hf.com/iceberg-warehouse",
+      "--conf", "spark.sql.catalog.glue.catalog-impl=org.apache.iceberg.aws.glue.GlueCatalog",
+      "--conf", "spark.sql.catalog.glue.io-impl=org.apache.iceberg.aws.s3.S3FileIO",
+      "--conf", "spark.sql.catalog.glue.lock-impl=org.apache.iceberg.aws.dynamodb.DynamoDbLockManager",
+      "--conf", "spark.sql.catalog.glue.lock.table=IcebergLockTable",
+      "s3://data.aws-poc-hf.com/spark-jobs/spark-examples_2.13-0.1.0-SNAPSHOT.jar",
+      "s3://data.aws-poc-hf.com/raw-data/test-data-transactions.csv"
+    ]
+  }
+]

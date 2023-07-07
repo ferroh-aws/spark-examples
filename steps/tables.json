@@ -1,0 +1,22 @@
+[
+  {
+    "Type": "Spark",
+    "Name": "Create Tables",
+    "ActionOnFailure": "CONTINUE",
+    "Args": [
+      "--master", "yarn",
+      "--deploy-mode", "cluster",
+      "--executor-memory", "2g",
+      "--num-executors", "1",
+      "--executor-cores", "1",
+      "--class", "org.example.spark.CreateIceberg",
+      "--conf", "spark.sql.catalog.glue=org.apache.iceberg.spark.SparkCatalog",
+      "--conf", "spark.sql.catalog.glue.warehouse=s3://data.aws-poc-hf.com/iceberg-warehouse",
+      "--conf", "spark.sql.catalog.glue.catalog-impl=org.apache.iceberg.aws.glue.GlueCatalog",
+      "--conf", "spark.sql.catalog.glue.io-impl=org.apache.iceberg.aws.s3.S3FileIO",
+      "--conf", "spark.sql.catalog.glue.lock-impl=org.apache.iceberg.aws.dynamodb.DynamoDbLockManager",
+      "--conf", "spark.sql.catalog.glue.lock.table=IcebergLockTable",
+      "s3://data.aws-poc-hf.com/spark-jobs/spark-examples_2.13-0.1.0-SNAPSHOT.jar"
+    ]
+  }
+]

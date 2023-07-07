@@ -1,0 +1,24 @@
+[
+  {
+    "Type": "CUSTOM_JAR",
+    "Name": "EnvTestCommand",
+    "ActionOnFailure": "CONTINUE",
+    "Jar": "command-runner.jar",
+    "Args": [
+      "/bin/bash",
+      "ARCHIVES=True",
+      "PYSPARK_PYTHON=python3",
+      "spark-submit",
+      "--master", "yarn",
+      "--deploy-mode", "cluster",
+      "--executor-memory", "2g",
+      "--num-executors", "1",
+      "--executor-cores", "1",
+      "--conf", "spark.appMasterEnv.ARCHIVES=TRUE",
+      "--conf", "spark.pyspark.python=python3",
+      "--jars", "s3://data.aws-poc-hf.com/spark-jobs/spark-examples_2.13-0.1.0-SNAPSHOT.jar",
+      "--class", "org.example.spark.EnvRetrieverTest",
+      "s3://data.aws-poc-hf.com/spark-jobs/spark-examples_2.13-0.1.0-SNAPSHOT.jar"
+    ]
+  }
+]

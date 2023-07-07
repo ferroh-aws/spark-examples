@@ -1,0 +1,17 @@
+[
+  {
+    "Type": "Spark",
+    "Name": "EnvTest",
+    "ActionOnFailure": "CONTINUE",
+    "Args": [
+      "--master", "yarn",
+      "--deploy-mode", "cluster",
+      "--executor-memory", "2g",
+      "--num-executors", "1",
+      "--executor-cores", "1",
+      "--conf", "spark.executorEnv.ARCHIVES=TRUE",
+      "--conf", "spark.pyspark.python=python3",
+      "s3://data.aws-poc-hf.com/spark-jobs/env_test.py"
+    ]
+  }
+]

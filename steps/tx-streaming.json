@@ -1,0 +1,27 @@
+[
+  {
+    "Type": "Spark",
+    "Name": "IngestToIceberg",
+    "ActionOnFailure": "CONTINUE",
+    "Args": [
+      "--master", "yarn",
+      "--deploy-mode", "cluster",
+      "--executor-memory", "4g",
+      "--num-executors", "2",
+      "--executor-cores", "2",
+      "--class", "org.example.spark.streaming.TransactionStreaming",
+      "--conf", "spark.sql.extensions=org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions",
+      "--conf", "spark.sql.catalog.glue=org.apache.iceberg.spark.SparkCatalog",
+      "--conf", "spark.sql.catalog.glue.warehouse=s3://data.aws-poc-hf.com/iceberg-warehouse",
+      "--conf", "spark.sql.catalog.glue.catalog-impl=org.apache.iceberg.aws.glue.GlueCatalog",
+      "--conf", "spark.sql.catalog.glue.io-impl=org.apache.iceberg.aws.s3.S3FileIO",
+      "--conf", "spark.sql.catalog.glue.lock-impl=org.apache.iceberg.aws.dynamodb.DynamoDbLockManager",
+      "--conf", "spark.sql.catalog.glue.lock.table=IcebergLockTable",
+      "--conf", "spark.sql.iceberg.handle-timestamp-without-timezone=true",
+      "s3://data.aws-poc-hf.com/spark-jobs/spark-examples_2.13-0.1.0-SNAPSHOT.jar",
+      "b-3.streaming.eksxgm.c8.kafka.us-east-1.amazonaws.com:9098,b-2.streaming.eksxgm.c8.kafka.us-east-1.amazonaws.com:9098,b-1.streaming.eksxgm.c8.kafka.us-east-1.amazonaws.com:9098",
+      "tx_topic",
+      "s3://data.aws-poc-hf.com/checkpoint/streaming_txs"
+    ]
+  }
+]
